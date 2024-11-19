@@ -1,0 +1,20 @@
+services:
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pgpassword
+      POSTGRES_DB: postgres
+    volumes:
+      - ./docker/db:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+
+  web:
+    build: docker/web
+    image: shush-web
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
